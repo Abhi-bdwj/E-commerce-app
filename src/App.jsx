@@ -7,6 +7,9 @@ import SignUp from "./pages/SignUp";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Products from "./components/Products";
+import Footer from "./components/Footer";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
 
 export const appRouter = createBrowserRouter([
   {
@@ -49,8 +52,11 @@ export const appRouter = createBrowserRouter([
 function App() {
   return (
     <div>
-      <Header />
-      <Outlet />
+      <Provider store={appStore}>
+        <Header />
+        <Outlet />
+        <Footer />
+      </Provider>
     </div>
   );
 }
