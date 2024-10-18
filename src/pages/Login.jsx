@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess, loginFailure } from "@/utils/userSlice";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import LoginBg from "../assets/LoginBg.jpg"; // Adjust the path to your image if needed
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -13,9 +14,9 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = async (loginData) => {
-    
     const { email, password } = loginData;
 
     try {
@@ -33,6 +34,7 @@ const Login = () => {
           displayName: user.displayName,
         })
       );
+      navigate("/")
 
       console.log("Logged in successfully:", user);
     } catch (error) {
@@ -50,12 +52,15 @@ const Login = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md mb-36 ml-96"> {/* Added ml-10 to shift the form to the left */}
-        <h2 className="text-2xl font-bold text-center">Login to Your Account</h2>
+      <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md mb-36 ml-96">
+        {" "}
+        {/* Added ml-10 to shift the form to the left */}
+        <h2 className="text-2xl font-bold text-center">
+          Login to Your Account
+        </h2>
         <p className="text-center text-gray-600 mb-4">
           Enter your email and password below
         </p>
-
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium">
@@ -69,7 +74,9 @@ const Login = () => {
               placeholder="m@example.com"
             />
             {errors.email && (
-              <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+              <p className="text-red-600 text-sm mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
@@ -93,7 +100,9 @@ const Login = () => {
               placeholder="Your password"
             />
             {errors.password && (
-              <p className="text-red-600 text-sm mt-1">{errors.password.message}</p>
+              <p className="text-red-600 text-sm mt-1">
+                {errors.password.message}
+              </p>
             )}
           </div>
 

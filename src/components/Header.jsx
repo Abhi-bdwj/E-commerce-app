@@ -1,16 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCartIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/utils/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess, logout } from "@/utils/userSlice";
+import { AvatarDropdownMenu } from "./AvatarDropdown";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((store) => store.user);
   const cartItems = ["sher", "sher2"];
 
   const LoginSignupHandler = () => {
     navigate("/signup");
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName } = user;
+        dispatch(
+          loginSuccess({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+          })
+        );
+        navigate("/")
+      } else {
+        dispatch(logout());
+      }
+    });
+    return () => unsubscribe();
+  }, [dispatch]);
 
   return (
     <header>
@@ -55,28 +81,24 @@ const Header = () => {
           </nav>
         </div>
         <div className="flex items-center space-x-4">
-          <Link
-            to="/cart"
-            className="text-gray-700 hover:text-black hover:underline pt-2 mr-2"
-          >
-            <div className="relative inline-flex items-center">
-              <ShoppingCartIcon className="h-7 w-7" />
-              {cartItems.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-black text-white rounded-full text-xs h-5 w-5 flex items-center justify-center">
-                  {cartItems.length}
-                </span>
-              )}
-            </div>
+          <Link to="/cart" className="relative inline-flex items-center pt-2">
+            <ShoppingCartIcon className="h-7 w-7 text-gray-700 hover:text-black hover:underline" />
+            {cartItems.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-black text-white rounded-full text-xs h-5 w-5 flex items-center justify-center">
+                {cartItems.length}
+              </span>
+            )}
           </Link>
-          <Button onClick={LoginSignupHandler} className="p-2">
-            Login / SignUp
-          </Button>
-          <Avatar className="cursor-pointer">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+          {!isAuthenticated ? (
+            <Button onClick={LoginSignupHandler} className="p-2">
+              Login / SignUp
+            </Button>
+          ) : (
+            <div className="relative pl-2">
+              <AvatarDropdownMenu />
+            </div>
+          )}
         </div>
-        
       </div>
     </header>
   );

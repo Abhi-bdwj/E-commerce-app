@@ -5,6 +5,7 @@ import { auth } from "@/utils/firebase";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginSuccess } from "@/utils/userSlice";
 import LoginBg from "../assets/LoginBg.jpg"; // Adjust the path to your image if needed
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const {
@@ -14,6 +15,7 @@ const SignUp = () => {
     watch,
   } = useForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = async (signupData) => {
     const { name, email, password } = signupData;
@@ -41,6 +43,7 @@ const SignUp = () => {
           photoURL: user.photoURL,
         })
       );
+      navigate("/");
 
       console.log("User created and profile updated:", user);
     } catch (error) {
@@ -60,12 +63,13 @@ const SignUp = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md ml-96 mb-32"> {/* Added ml-10 to shift the form to the left */}
+      <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md ml-96 mb-32">
+        {" "}
+        {/* Added ml-10 to shift the form to the left */}
         <h2 className="text-2xl font-bold text-center">Create an Account</h2>
         <p className="text-center text-gray-600 mb-4">
           Enter your details below to sign up
         </p>
-
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium">

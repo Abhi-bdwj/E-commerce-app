@@ -1,14 +1,20 @@
 import React from "react";
 import { Star } from "lucide-react";
 import { Button } from "./ui/button";
+import ShimmerCard from "../utils/ShimmerCard";
 
 const ProductCard = (props) => {
-  const { title, price, rating, image, productId } = props;
+  const { title, price, rating, image, productId, status } = props;
 
   const handleAddToCart = (event, id) => {
-    event.preventDefault(); 
+    event.preventDefault();
     console.log(`Added product with ID: ${id} to cart`);
   };
+
+  // Show shimmer effect if loading
+  if (status === "Loading") {
+    return <ShimmerCard />;
+  }
 
   return (
     <div className="flex flex-col h-full w-72 group relative border border-gray-300 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200">
@@ -19,7 +25,7 @@ const ProductCard = (props) => {
           className="h-full w-full object-cover object-center lg:h-full lg:w-full"
         />
       </div>
-      <div className="mt-2 flex-grow p-2 ">
+      <div className="mt-2 flex-grow p-2">
         <h3 className="text-sm text-gray-700">
           <a href="#" onClick={(e) => e.preventDefault()}>
             <span aria-hidden="true" className="absolute inset-0 font-bold" />
@@ -35,7 +41,7 @@ const ProductCard = (props) => {
       <div className="p-2">
         <Button
           type="button"
-          onClick={(e) => handleAddToCart(e, productId)} 
+          onClick={(e) => handleAddToCart(e, productId)}
           className="bg-primary text-white rounded-md w-full hover:bg-primary-dark transition duration-200"
         >
           Add to cart
