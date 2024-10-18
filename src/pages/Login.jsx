@@ -15,6 +15,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (loginData) => {
+    
     const { email, password } = loginData;
 
     try {
@@ -49,7 +50,7 @@ const Login = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md  ml-96"> {/* Added ml-10 to shift the form to the left */}
+      <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md mb-36 ml-96"> {/* Added ml-10 to shift the form to the left */}
         <h2 className="text-2xl font-bold text-center">Login to Your Account</h2>
         <p className="text-center text-gray-600 mb-4">
           Enter your email and password below

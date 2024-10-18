@@ -60,7 +60,7 @@ const SignUp = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md ml-96 mb-20"> {/* Added ml-10 to shift the form to the left */}
+      <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md ml-96 mb-32"> {/* Added ml-10 to shift the form to the left */}
         <h2 className="text-2xl font-bold text-center">Create an Account</h2>
         <p className="text-center text-gray-600 mb-4">
           Enter your details below to sign up

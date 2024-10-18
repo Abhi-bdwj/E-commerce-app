@@ -2,18 +2,19 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCartIcon } from "lucide-react";
 import { Button } from "./ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Header = () => {
   const navigate = useNavigate();
   const cartItems = ["sher", "sher2"];
 
   const LoginSignupHandler = () => {
-    navigate("/login");
+    navigate("/signup");
   };
 
   return (
     <header>
-      <div className="h-20 bg-white shadow-sm flex justify-between items-center px-10">
+      <div className="h-20 bg-white shadow-lg flex justify-between items-center px-10">
         <div className="flex items-center space-x-8">
           <h1 className="font-bold text-2xl">𝒁𝑼𝑬 ˢᵗᵒʳᵉ</h1>
           <nav>
@@ -67,8 +68,15 @@ const Header = () => {
               )}
             </div>
           </Link>
-          <Button onClick={LoginSignupHandler} className="p-2">Login / SignUp</Button>
+          <Button onClick={LoginSignupHandler} className="p-2">
+            Login / SignUp
+          </Button>
+          <Avatar className="cursor-pointer">
+          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
         </div>
+        
       </div>
     </header>
   );
