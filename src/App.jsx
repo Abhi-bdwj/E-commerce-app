@@ -10,6 +10,7 @@ import Products from "./components/Products";
 import Footer from "./components/Footer";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
+import Home from "./pages/Home";
 
 export const appRouter = createBrowserRouter([
   {
@@ -17,6 +18,14 @@ export const appRouter = createBrowserRouter([
     element: <App />,
     errorElement: <Error />,
     children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "/home",
+        element: <Home />,
+      },
       {
         path: "/cart",
         element: <Cart />,
@@ -51,10 +60,12 @@ export const appRouter = createBrowserRouter([
 
 function App() {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Provider store={appStore}>
         <Header />
-        <Outlet />
+        <main className="flex-grow">
+          <Outlet />
+        </main>
         <Footer />
       </Provider>
     </div>

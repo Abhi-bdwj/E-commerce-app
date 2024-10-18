@@ -11,7 +11,6 @@ const ProductCard = (props) => {
     console.log(`Added product with ID: ${id} to cart`);
   };
 
-  // Show shimmer effect if loading
   if (status === "Loading") {
     return <ShimmerCard />;
   }
@@ -22,13 +21,13 @@ const ProductCard = (props) => {
         <img
           alt="Product Image"
           src={image}
-          className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+          className=" object-cover object-center lg:h-full lg:w-full"
         />
       </div>
-      <div className="mt-2 flex-grow p-2">
-        <h3 className="text-sm text-gray-700">
+      <div className=" flex-grow p-2 bg-slate-200">
+        <h3 className="text-sm text-gray-700 font-semibold ">
           <a href="#" onClick={(e) => e.preventDefault()}>
-            <span aria-hidden="true" className="absolute inset-0 font-bold" />
+            <span aria-hidden="true" className="absolute inset-0 " />
             {title}
           </a>
         </h3>

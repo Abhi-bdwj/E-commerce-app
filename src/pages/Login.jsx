@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess, loginFailure } from "@/utils/userSlice";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import LoginBg from "../assets/LoginBg.jpg"; // Adjust the path to your image if needed
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -34,7 +34,7 @@ const Login = () => {
           displayName: user.displayName,
         })
       );
-      navigate("/")
+      navigate("/");
 
       console.log("Logged in successfully:", user);
     } catch (error) {

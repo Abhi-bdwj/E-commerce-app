@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCartIcon } from "lucide-react";
 import { Button } from "./ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +29,7 @@ const Header = () => {
             displayName: displayName,
           })
         );
-        navigate("/")
+        navigate("/");
       } else {
         dispatch(logout());
       }
@@ -47,7 +46,7 @@ const Header = () => {
             <ul className="flex space-x-8">
               <li className="pt-2">
                 <Link
-                  to="/"
+                  to="/home"
                   className="text-gray-700 hover:text-black hover:underline"
                 >
                   Home
