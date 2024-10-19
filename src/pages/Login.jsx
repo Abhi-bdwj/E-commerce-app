@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess, loginFailure } from "@/utils/userSlice";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import LoginBg from "../assets/LoginBg.jpg"; // Adjust the path to your image if needed
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -113,10 +113,10 @@ const Login = () => {
             Login
           </button>
           <div className="flex">
-            <span className="pr-2">Not a user? Please</span>
-            <a href="/signup" className="text-black hover:underline">
-              Sign Up now.
-            </a>
+            <span className="pr-2">Don't have an account yet? </span>
+            <Link to="/signup" className="text-black hover:text-blue-600 underline">
+              Sign Up
+            </Link>
           </div>
         </form>
       </div>

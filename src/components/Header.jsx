@@ -15,7 +15,7 @@ const Header = () => {
   const cartItems = ["sher", "sher2"];
 
   const LoginSignupHandler = () => {
-    navigate("/signup");
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -51,6 +51,14 @@ const Header = () => {
                   className="text-gray-500 hover:text-black hover:font-semibold"
                 >
                   Home
+                </Link>
+              </li>
+              <li className="pt-2">
+                <Link
+                  to="/categories"
+                  className="text-gray-500 hover:text-black hover:font-semibold"
+                >
+                  Categories
                 </Link>
               </li>
               <li className="pt-2">

@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth"; // Import Firebase sign out method
 import { auth } from "@/utils/firebase"; // Import Firebase auth instance
 import { useDispatch } from "react-redux"; // Import Redux dispatch
-import { logout } from "@/utils/userSlice"; // Import the logout action
+import { loginFailure, logout } from "@/utils/userSlice"; // Import the logout action
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,7 +45,7 @@ export const AvatarDropdownMenu = () => {
       dispatch(logout());
       navigate("/");
     } catch (error) {
-      console.error("Error logging out:", error);
+      dispatch(loginFailure());
     }
   };
 

@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import { fetchAllCategories } from "@/utils/categoriesSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const useGetAllCategories = () => {
-  const getAllCategories = async () => {
-    const response = await fetch(
-      "https://fakestoreapi.com/products/categories"
-    );
-    const allCategories = await response.json();
-    console.log(allCategories);
-    return allCategories;
-  };
+  const { categories, status, error } = useSelector(
+    (state) => state.categories
+  );
+  const dispatch = useDispatch();
   useEffect(() => {
-    getAllCategories();
-  }, []);
+    if (status === "idle" && categories.length === 0) {
+      dispatch(fetchAllCategories());
+    }
+  }, [dispatch, status, categories.length]);
+
+  return { categories, status, error };
 };
 
 export default useGetAllCategories;

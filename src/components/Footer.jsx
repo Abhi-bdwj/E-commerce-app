@@ -1,5 +1,6 @@
 import React from "react";
-import { Facebook , Instagram ,Twitter ,Linkedin} from "lucide-react"; // Import social media icons
+import { Link } from "react-router-dom";
+import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react"; // Import social media icons
 const Footer = () => {
   return (
     <footer className="bg-black text-white py-6">
@@ -15,24 +16,24 @@ const Footer = () => {
           <h2 className="text-lg font-bold">Quick Links</h2>
           <ul className="mt-2 space-y-2">
             <li>
-              <a href="/about" className="hover:underline">
+              <Link to="/about" className="hover:underline">
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/contact" className="hover:underline">
+              <Link to="/contact" className="hover:underline">
                 Contact
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/privacy" className="hover:underline">
+              <Link to="/privacy" className="hover:underline">
                 Privacy Policy
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/terms" className="hover:underline">
+              <Link to="/terms" className="hover:underline">
                 Terms of Service
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -41,19 +42,19 @@ const Footer = () => {
         <div className="w-full md:w-1/3 mb-4">
           <h2 className="text-lg font-bold">Follow Us</h2>
           <div className="flex space-x-4 mt-2">
-            <a href="#" className="hover:text-gray-400">
-              <Facebook  className="h-6 w-6" />
-            </a>
+            <Link to="#" className="hover:text-gray-400">
+              <Facebook className="h-6 w-6" />
+            </Link>
 
-            <a href="#" className="hover:text-gray-400">
-              <Instagram  className="h-6 w-6" />
-            </a>
-            <a href="#" className="hover:text-gray-400">
-              <Twitter  className="h-6 w-6" />
-            </a>
-            <a href="#" className="hover:text-gray-400">
-              <Linkedin  className="h-6 w-6" />
-            </a>
+            <Link to="#" className="hover:text-gray-400">
+              <Instagram className="h-6 w-6" />
+            </Link>
+            <Link to="#" className="hover:text-gray-400">
+              <Twitter className="h-6 w-6" />
+            </Link>
+            <Link to="#" className="hover:text-gray-400">
+              <Linkedin className="h-6 w-6" />
+            </Link>
           </div>
         </div>
       </div>

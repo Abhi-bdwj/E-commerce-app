@@ -14,7 +14,7 @@ const userSlice = createSlice({
     },
 
     loginFailure(state, action) {
-      state.error = action.payload;
+      state.error = action.error.message;
     },
     logout(state) {
       state.user = null;

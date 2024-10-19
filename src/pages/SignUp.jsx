@@ -5,7 +5,7 @@ import { auth } from "@/utils/firebase";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginSuccess } from "@/utils/userSlice";
 import LoginBg from "../assets/LoginBg.jpg"; // Adjust the path to your image if needed
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
   const {
@@ -164,9 +164,9 @@ const SignUp = () => {
           </button>
           <div className="flex">
             <span className="pr-2">Already have an account?</span>
-            <a href="/login" className="text-black hover:underline">
-              Login now.
-            </a>
+            <Link to="/login" className="text-black hover:text-blue-600 underline">
+              Login
+            </Link>
           </div>
         </form>
       </div>

@@ -1,19 +1,14 @@
 import React from "react";
 import { Star } from "lucide-react";
 import { Button } from "./ui/button";
-import ShimmerCard from "../utils/ShimmerCard";
 
 const ProductCard = (props) => {
-  const { title, price, rating, image, productId, status } = props;
+  const { title, price, rating, image, productId } = props;
 
   const handleAddToCart = (event, id) => {
     event.preventDefault();
     console.log(`Added product with ID: ${id} to cart`);
   };
-
-  if (status === "Loading") {
-    return <ShimmerCard />;
-  }
 
   return (
     <div className="flex flex-col h-full w-72 group relative border border-gray-300 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200">

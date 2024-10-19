@@ -11,6 +11,8 @@ import Footer from "./components/Footer";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Home from "./pages/Home";
+import Categories from "./components/Categories";
+import CategoryProducts from "./pages/CategoryProducts";
 
 export const appRouter = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ export const appRouter = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/categories",
+        element: <Categories />,
+      },
+      {
+        path: "/category/:categoryName",
+        element: <CategoryProducts />,
       },
       {
         path: "/about",

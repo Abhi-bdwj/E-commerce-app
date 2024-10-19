@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "@/utils/productSlice";
 import ProductCard from "./ProductCard";
-import { Star } from "lucide-react";
+import ShimmerCard from "../utils/ShimmerCard";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -12,13 +12,13 @@ const Products = () => {
     dispatch(fetchProducts());
   }, []);
 
-  if (status === "loading") {
-    return <>Loading</>;
-  }
+  // if (status === "Loading") {
+  //   return <ShimmerCard />;
+  // }
   if (status === "failed") {
     return <>Error:{error}</>;
   }
-  console.log(items);
+  console.log("rendered",items);
   return (
     <div className="bg-gray-100">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
