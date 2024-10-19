@@ -37,7 +37,7 @@ const ProductCard = (props) => {
         </div>
         <p className="text-sm font-medium text-gray-900 mt-2">${price}</p>
       </div>
-      <div className="p-2">
+      <div className="p-2  bg-slate-200">
         <Button
           type="button"
           onClick={(e) => handleAddToCart(e, productId)}

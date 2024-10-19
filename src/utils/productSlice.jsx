@@ -36,5 +36,5 @@ const productSlice = createSlice({
       });
   },
 });
-export const {} = productSlice.actions;
+export const { addproduct } = productSlice.actions;
 export default productSlice.reducer;

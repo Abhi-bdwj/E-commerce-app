@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCartIcon } from "lucide-react";
 import { Button } from "./ui/button";
@@ -29,6 +29,7 @@ const Header = () => {
             displayName: displayName,
           })
         );
+
         navigate("/");
       } else {
         dispatch(logout());
@@ -43,11 +44,11 @@ const Header = () => {
         <div className="flex items-center space-x-8">
           <h1 className="font-bold text-2xl">𝒁𝑼𝑬 ˢᵗᵒʳᵉ</h1>
           <nav>
-            <ul className="flex space-x-8">
+            <ul className="flex space-x-10 pb-1">
               <li className="pt-2">
                 <Link
                   to="/home"
-                  className="text-gray-700 hover:text-black hover:underline"
+                  className="text-gray-500 hover:text-black hover:font-semibold"
                 >
                   Home
                 </Link>
@@ -55,7 +56,7 @@ const Header = () => {
               <li className="pt-2">
                 <Link
                   to="/products"
-                  className="text-gray-700 hover:text-black hover:underline"
+                  className="text-gray-500 hover:text-black hover:font-semibold"
                 >
                   Products
                 </Link>
@@ -63,7 +64,7 @@ const Header = () => {
               <li className="pt-2">
                 <Link
                   to="/contact"
-                  className="text-gray-700 hover:text-black hover:underline"
+                  className="text-gray-500 hover:text-black hover:font-semibold"
                 >
                   Contact
                 </Link>
@@ -71,7 +72,7 @@ const Header = () => {
               <li className="pt-2">
                 <Link
                   to="/about"
-                  className="text-gray-700 hover:text-black hover:underline"
+                  className="text-gray-500 hover:text-black hover:font-semibold"
                 >
                   About Us
                 </Link>
@@ -81,7 +82,7 @@ const Header = () => {
         </div>
         <div className="flex items-center space-x-4">
           <Link to="/cart" className="relative inline-flex items-center pt-2">
-            <ShoppingCartIcon className="h-7 w-7 text-gray-700 hover:text-black hover:underline" />
+            <ShoppingCartIcon className="h-7 w-7 text-gray-500 hover:text-black hover:font-semibold" />
             {cartItems.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-black text-white rounded-full text-xs h-5 w-5 flex items-center justify-center">
                 {cartItems.length}
