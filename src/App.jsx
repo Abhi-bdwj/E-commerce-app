@@ -25,10 +25,6 @@ export const appRouter = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/home",
-        element: <Home />,
-      },
-      {
         path: "/cart",
         element: <Cart />,
       },

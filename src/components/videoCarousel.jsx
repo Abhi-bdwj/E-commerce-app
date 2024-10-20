@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react"; // Importing Lucide icons
+import { ChevronLeft, ChevronRight } from "lucide-react"; 
 
 const VideoCarousel = () => {
   const videos = [
@@ -35,7 +35,7 @@ const VideoCarousel = () => {
   };
 
   const handleVideoEnd = () => {
-    nextVideo(); // Automatically play the next video when the current one ends
+    nextVideo(); 
   };
 
   return (
@@ -47,11 +47,10 @@ const VideoCarousel = () => {
           title={videos[currentVideoIndex].title}
           autoPlay
           muted
-          onEnded={handleVideoEnd} // Listen for video end event
+          onEnded={handleVideoEnd} 
         />
       </div>
 
-      {/* Transparent buttons with Lucide icons */}
       <div className="absolute inset-0 flex justify-between items-center px-4">
         <button
           onClick={prevVideo}

@@ -4,7 +4,7 @@ import { auth } from "@/utils/firebase";
 import { useDispatch } from "react-redux";
 import { loginSuccess, loginFailure } from "@/utils/userSlice";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import LoginBg from "../assets/LoginBg.jpg"; // Adjust the path to your image if needed
+import LoginBg from "../assets/LoginBg.jpg"; 
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
@@ -53,8 +53,6 @@ const Login = () => {
       }}
     >
       <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md mb-36 ml-96">
-        {" "}
-        {/* Added ml-10 to shift the form to the left */}
         <h2 className="text-2xl font-bold text-center">
           Login to Your Account
         </h2>
@@ -114,7 +112,10 @@ const Login = () => {
           </button>
           <div className="flex">
             <span className="pr-2">Don't have an account yet? </span>
-            <Link to="/signup" className="text-black hover:text-blue-600 underline">
+            <Link
+              to="/signup"
+              className="text-black hover:text-blue-600 underline"
+            >
               Sign Up
             </Link>
           </div>

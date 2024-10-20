@@ -1,10 +1,10 @@
-import React, { useDebugValue } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/utils/firebase";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginSuccess } from "@/utils/userSlice";
-import LoginBg from "../assets/LoginBg.jpg"; // Adjust the path to your image if needed
+import LoginBg from "../assets/LoginBg.jpg"; 
 import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
@@ -30,16 +30,15 @@ const SignUp = () => {
       const user = userCredential.user;
 
       await updateProfile(user, {
-        displayName: name, // Set display name
+        displayName: name, 
         photoURL: "https://example.com/jane-q-user/profile.jpg",
       });
 
-      // Dispatch login success with updated user info
       dispatch(
         loginSuccess({
           uid: user.uid,
           email: user.email,
-          displayName: user.displayName, // Should now contain the name you set
+          displayName: user.displayName, 
           photoURL: user.photoURL,
         })
       );
@@ -65,7 +64,6 @@ const SignUp = () => {
     >
       <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md ml-96 mb-32">
         {" "}
-        {/* Added ml-10 to shift the form to the left */}
         <h2 className="text-2xl font-bold text-center">Create an Account</h2>
         <p className="text-center text-gray-600 mb-4">
           Enter your details below to sign up

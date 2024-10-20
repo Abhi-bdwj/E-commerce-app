@@ -1,6 +1,7 @@
 import React from "react";
 import { Star } from "lucide-react";
 import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 
 const ProductCard = (props) => {
   const { title, price, rating, image, productId } = props;
@@ -19,27 +20,22 @@ const ProductCard = (props) => {
           className=" object-cover object-center lg:h-full lg:w-full"
         />
       </div>
-      <div className=" flex-grow p-2 bg-slate-200">
+      <div className=" flex-grow p-2 bg-white">
         <h3 className="text-sm text-gray-700 font-semibold ">
-          <a href="#" onClick={(e) => e.preventDefault()}>
+          <Link to="#" onClick={(e) => handleAddToCart(e, productId)}>
             <span aria-hidden="true" className="absolute inset-0 " />
             {title}
-          </a>
+          </Link>
         </h3>
-        <div className="flex items-center mt-2">
-          <Star className="w-5 h-5 fill-primary text-primary mr-1 pt-1" />
-          <span className="text-sm text-muted-foreground">{rating}</span>
+        <div className="flex items-center justify-between mt-2">
+          <div>
+            <span className=" flex text-sm text-muted-foreground ">
+              {rating}
+              <Star className="w-5 h-5 fill-primary text-primary mr-1 mb-1 pt-1" />
+            </span>
+          </div>
+          <p className="text-sm font-medium text-gray-900 ">${price}</p>
         </div>
-        <p className="text-sm font-medium text-gray-900 mt-2">${price}</p>
-      </div>
-      <div className="p-2  bg-slate-200">
-        <Button
-          type="button"
-          onClick={(e) => handleAddToCart(e, productId)}
-          className="bg-primary text-white rounded-md w-full hover:bg-primary-dark transition duration-200"
-        >
-          Add to cart
-        </Button>
       </div>
     </div>
   );

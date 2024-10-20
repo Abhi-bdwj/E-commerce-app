@@ -11,6 +11,7 @@ import { AvatarDropdownMenu } from "./AvatarDropdown";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loggedIn, setLoggedIn] = useState(true);
   const { isAuthenticated } = useSelector((store) => store.user);
   const cartItems = ["sher", "sher2"];
 
@@ -29,10 +30,12 @@ const Header = () => {
             displayName: displayName,
           })
         );
+        setLoggedIn(true);
 
         navigate("/");
       } else {
         dispatch(logout());
+        setLoggedIn(false);
       }
     });
     return () => unsubscribe();
@@ -47,8 +50,8 @@ const Header = () => {
             <ul className="flex space-x-10 pb-1">
               <li className="pt-2">
                 <Link
-                  to="/home"
-                  className="text-gray-500 hover:text-black hover:font-semibold"
+                  to="/"
+                  className="text-gray-500 hover:text-black hover:font-md"
                 >
                   Home
                 </Link>
@@ -56,7 +59,7 @@ const Header = () => {
               <li className="pt-2">
                 <Link
                   to="/categories"
-                  className="text-gray-500 hover:text-black hover:font-semibold"
+                  className="text-gray-500 hover:text-black hover:font-md"
                 >
                   Categories
                 </Link>
@@ -64,7 +67,7 @@ const Header = () => {
               <li className="pt-2">
                 <Link
                   to="/products"
-                  className="text-gray-500 hover:text-black hover:font-semibold"
+                  className="text-gray-500 hover:text-black hover:font-md"
                 >
                   Products
                 </Link>
@@ -72,7 +75,7 @@ const Header = () => {
               <li className="pt-2">
                 <Link
                   to="/contact"
-                  className="text-gray-500 hover:text-black hover:font-semibold"
+                  className="text-gray-500 hover:text-black hover:font-md"
                 >
                   Contact
                 </Link>
@@ -80,7 +83,7 @@ const Header = () => {
               <li className="pt-2">
                 <Link
                   to="/about"
-                  className="text-gray-500 hover:text-black hover:font-semibold"
+                  className="text-gray-500 hover:text-black hover:font-md"
                 >
                   About Us
                 </Link>
@@ -90,14 +93,14 @@ const Header = () => {
         </div>
         <div className="flex items-center space-x-4">
           <Link to="/cart" className="relative inline-flex items-center pt-2">
-            <ShoppingCartIcon className="h-7 w-7 text-gray-500 hover:text-black hover:font-semibold" />
+            <ShoppingCartIcon className="h-7 w-7 text-gray-500 hover:text-black hover:font-zsemibold" />
             {cartItems.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-black text-white rounded-full text-xs h-5 w-5 flex items-center justify-center">
                 {cartItems.length}
               </span>
             )}
           </Link>
-          {!isAuthenticated ? (
+          {!loggedIn && !isAuthenticated ? (
             <Button onClick={LoginSignupHandler} className="p-2">
               Login / SignUp
             </Button>
