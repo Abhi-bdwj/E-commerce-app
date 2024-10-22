@@ -1,4 +1,4 @@
-import VideoCarousel from "@/components/videoCarousel";
+import VideoCarousel from "@/components/layout/videoCarousel";
 import React from "react";
 import { Link } from "react-router-dom";
 const products = [

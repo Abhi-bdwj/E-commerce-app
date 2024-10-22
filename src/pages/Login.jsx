@@ -4,7 +4,7 @@ import { auth } from "@/utils/firebase";
 import { useDispatch } from "react-redux";
 import { loginSuccess, loginFailure } from "@/utils/userSlice";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import LoginBg from "../assets/LoginBg.jpg"; 
+import LoginBg from "../assets/images/LoginBg.jpg"; 
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {

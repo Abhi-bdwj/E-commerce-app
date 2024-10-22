@@ -1,18 +1,18 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
-import Header from "./components/Header";
+import Header from "./components/layout/Header";
 import Cart from "./pages/Cart";
-import ProductPage from "./pages/ProductPage";
+import ProductDetailPage from "./components/products/ProductDetailPage";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Products from "./components/Products";
-import Footer from "./components/Footer";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Products from "./pages/Products";
+import Footer from "./components/layout/Footer";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Home from "./pages/Home";
-import Categories from "./components/Categories";
-import CategoryProducts from "./pages/CategoryProducts";
+import Categories from "./components/categories/CategoriesList";
+import ProductsByCategory from "./components/products/ProductsByCategory";
 
 export const appRouter = createBrowserRouter([
   {
@@ -34,7 +34,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "/category/:categoryName",
-        element: <CategoryProducts />,
+        element: <ProductsByCategory />,
       },
       {
         path: "/about",
@@ -54,7 +54,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "/productdetail",
-        element: <ProductPage />,
+        element: <ProductDetailPage />,
       },
       {
         path: "/contact",

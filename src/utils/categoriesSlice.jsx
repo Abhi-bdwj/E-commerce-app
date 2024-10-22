@@ -3,9 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const fetchAllCategories = createAsyncThunk(
   "categories/fetchAllCategories",
   async () => {
-    const response = await fetch(
-      "https://fakestoreapi.com/products/categories"
-    );
+    const response = await fetch("https://dummyjson.com/products/categories");
     if (!response.ok) throw new Error("Failed to fetch All categories");
 
     const allCategories = await response.json();

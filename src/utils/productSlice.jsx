@@ -2,23 +2,23 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async () => {
-    const response = await fetch("https://fakestoreapi.com/products");
+  async (limit=194) => {
+    //limit can be set to 194 for all items
+    const response = await fetch(`https://dummyjson.com/products/?limit=${limit}`);
     if (!response.ok) throw new Error("Failed to fetch selected category");
     const productsData = await response.json();
-    return productsData;
+    return productsData.products;
   }
 );
 export const fetchProductsByCategory = createAsyncThunk(
-  "categories/fetchProductsByCategory",
-  async (category) => {
-    const response = await fetch(
-      `https://fakestoreapi.com/products/category/${category}`
-    );
+  "products/fetchProductsByCategory",
+  async (category_URL) => {
+    const response = await fetch(`${category_URL}`);
     if (!response.ok) throw new Error("Failed to fetch selected category");
 
     const selectedCategory = await response.json();
-    return selectedCategory;
+    console.log("selectedcategoryproducts",selectedCategory.products);
+    return selectedCategory.products;
   }
 );
 
@@ -27,25 +27,27 @@ const productSlice = createSlice({
   initialState: {
     items: [],
     selectedCategoryProducts: [],
+    selectedCategoryURL: null,
     status: { productsDataStatus: "idle", selectedCategoryStatus: "idle" },
     error: null,
   },
   reducers: {
-    addProduct(state, action) {
-      state.items.push(action.payload);
+    updateSelectedCategoryURL(state, action) {
+      state.selectedCategoryURL = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
-        state.productsDataStatus = "Loading";
+        state.status.productsDataStatus = "Loading";
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.productsDataStatus = "fulfilled";
+        state.status.productsDataStatus = "fulfilled";
         state.items = action.payload;
+        
       })
       .addCase(fetchProducts.rejected, (state, action) => {
-        state.productsDataStatus = "failed";
+        state.status.productsDataStatus = "failed";
         state.error = action.error.message;
       });
 
@@ -63,5 +65,5 @@ const productSlice = createSlice({
       });
   },
 });
-export const { addproduct } = productSlice.actions;
+export const { addproduct, updateSelectedCategoryURL } = productSlice.actions;
 export default productSlice.reducer;

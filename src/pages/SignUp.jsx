@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/utils/firebase";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginSuccess } from "@/utils/userSlice";
-import LoginBg from "../assets/LoginBg.jpg"; 
+import LoginBg from "../assets/images/LoginBg.jpg";
 import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
@@ -30,7 +30,7 @@ const SignUp = () => {
       const user = userCredential.user;
 
       await updateProfile(user, {
-        displayName: name, 
+        displayName: name,
         photoURL: "https://example.com/jane-q-user/profile.jpg",
       });
 
@@ -38,7 +38,7 @@ const SignUp = () => {
         loginSuccess({
           uid: user.uid,
           email: user.email,
-          displayName: user.displayName, 
+          displayName: user.displayName,
           photoURL: user.photoURL,
         })
       );
@@ -63,7 +63,6 @@ const SignUp = () => {
       }}
     >
       <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md ml-96 mb-32">
-        {" "}
         <h2 className="text-2xl font-bold text-center">Create an Account</h2>
         <p className="text-center text-gray-600 mb-4">
           Enter your details below to sign up
@@ -162,7 +161,10 @@ const SignUp = () => {
           </button>
           <div className="flex">
             <span className="pr-2">Already have an account?</span>
-            <Link to="/login" className="text-black hover:text-blue-600 underline">
+            <Link
+              to="/login"
+              className="text-black hover:text-blue-600 underline"
+            >
               Login
             </Link>
           </div>
