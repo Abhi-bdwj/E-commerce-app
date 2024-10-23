@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, logout } from "@/utils/userSlice";
 import { AvatarDropdownMenu } from "./AvatarDropdown";
 import SearchBar from "./SearchBar";
+import NavigationDropdown from "./NavigationDropdown";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location=useLocation();
+  const location = useLocation();
   const [loggedIn, setLoggedIn] = useState(true);
   const { isAuthenticated } = useSelector((store) => store.user);
   const cartItems = ["sher", "sher2"];
@@ -46,57 +47,16 @@ const Header = () => {
       }
     });
     return () => unsubscribe();
-  }, [dispatch,navigate,location.pathname]);
+  }, [dispatch, navigate, location.pathname]);
 
   return (
     <header>
       <div className="h-16 bg-white shadow-lg flex justify-between items-center px-10">
         <div className="flex items-center space-x-8">
           <h1 className="font-bold text-2xl pl-14">𝒁𝑼𝑬 ˢᵗᵒʳᵉ</h1>
-          <nav>
-            <ul className="flex space-x-10 pb-1">
-              <li className="pt-2">
-                <Link
-                  to="/"
-                  className="text-gray-500 hover:text-black hover:font-md"
-                >
-                  Home
-                </Link>
-              </li>
-              <li className="pt-2">
-                <Link
-                  to="/categories"
-                  className="text-gray-500 hover:text-black hover:font-md"
-                >
-                  Categories
-                </Link>
-              </li>
-              <li className="pt-2">
-                <Link
-                  to="/products"
-                  className="text-gray-500 hover:text-black hover:font-md"
-                >
-                  Products
-                </Link>
-              </li>
-              <li className="pt-2">
-                <Link
-                  to="/contact"
-                  className="text-gray-500 hover:text-black hover:font-md"
-                >
-                  Contact Us
-                </Link>
-              </li>
-              <li className="pt-2">
-                <Link
-                  to="/about"
-                  className="text-gray-500 hover:text-black hover:font-md"
-                >
-                  About Us
-                </Link>
-              </li>
-            </ul>
-          </nav>
+
+          <NavigationDropdown />
+          
         </div>
         <div className="flex items-center space-x-4">
           <SearchBar onSearch={handleSearch} />

@@ -29,10 +29,6 @@ export const appRouter = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path: "/categories",
-        element: <Categories />,
-      },
-      {
         path: "/category/:categoryName",
         element: <ProductsByCategory />,
       },
