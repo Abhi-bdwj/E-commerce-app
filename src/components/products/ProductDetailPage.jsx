@@ -1,89 +1,182 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ImageCarousel } from "../layout/ImageCarousel";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "../ui/select";
+import ProductReviewAccordion from "./ProductReviewAccordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/utils/cartSlice";
+
+const sizes = ["S", "M", "L", "XL", "XXL"];
 
 const ProductDetailPage = () => {
   const location = useLocation();
   const { state } = location;
-
   const product = state?.product;
 
   if (!product) {
-    return <p>Product not found!</p>;
+    return <p>Product not found! Please return to the product list.</p>;
   }
 
-  const [quantity, setQuantity] = useState(1); 
+  const originalPrice = Math.round(
+    product.price / (1 - product.discountPercentage / 100)
+  );
+
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
+
   const handleQuantityChange = (value) => {
-    setQuantity((prevQuantity) => Math.max(prevQuantity + value, 1)); 
+    setQuantity(Number(value));
   };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Selected Color:", selectedColor);
-    console.log("Quantity:", quantity);
+
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+  };
+
+  const handleAddToCart = () => {
+    if (selectedSize) {
+      dispatch(
+        addToCart({
+          product,
+          selectedSize,
+          quantity,
+        })
+      );
+    }
   };
 
   return (
     <div className="flex pr-10 mb-40">
-      {/* Images */}
       <div className="pr-36 pl-28 pt-24 w-1/2">
         <ImageCarousel images={product.images} />
       </div>
 
-      {/* Product Details */}
       <div className="flex-1 pt-24 pr-10">
-        {/* Title */}
-        <h2 className="text-3xl font-semibold">{product.title}</h2>
+        <h2 className="text-4xl font-semibold">{product.title}</h2>
 
-        {/* Description */}
         <div className="mt-1 max-w-xl">
-          <p className="font-extralight text-md p-4">{product.description}</p>
+          <p className="font-extralight text-md pt-6">{product.description}</p>
         </div>
 
-        {/* Options */}
-        <div className="mt-6">
-          <form
-            onSubmit={handleSubmit}
-            className="bg-pink-400 p-4 mt-4 rounded-md"
-          >
-            {/* Sizes */}
-            <div className="bg-orange-300 p-2 rounded-md mt-2">
-              Sizes: {product.sizes?.join(", ")}
-            </div>
+        <div>
+          <div className="flex">
+            <h2 className="text-4xl font-medium mt-3">${product.price}</h2>
+            <h2 className="text-gray-500 line-through pl-2 mt-5 text-2xl">
+              ${originalPrice}
+            </h2>
+          </div>
+          <h2 className="text-red-500 text-base">{`(${product.discountPercentage}% OFF)`}</h2>
+        </div>
 
-            {/* Quantity */}
-            <div className="mt-2 flex items-center">
+        <form className="pt-3 rounded-md">
+          <div className="flex space-x-2 mt-2">
+            {sizes.map((size) => (
               <button
+                key={size}
                 type="button"
-                onClick={() => handleQuantityChange(-1)}
-                className="border border-gray-300 rounded-l-sm w-10 px-2 py-2 bg-gray-200 hover:bg-gray-300"
+                onClick={() => handleSizeSelect(size)}
+                className={`border rounded-md py-2 px-4 transition duration-200 ${
+                  selectedSize === size
+                    ? "border-blue-500 bg-blue-100"
+                    : "border-gray-300"
+                } hover:bg-blue-50`}
+                aria-label={`Select size ${size}`}
               >
-                -
+                {size}
               </button>
-              <input
-                type="number"
-                value={quantity}
-                readOnly
-                className="w-10 h-10 text-center border-t border-b border-gray-300 rounded-none"
-              />
-              <button
-                type="button"
-                onClick={() => handleQuantityChange(1)}
-                className="border border-gray-300 rounded-r-sm w-10 px-2 py-2 bg-gray-200 hover:bg-gray-300"
-              >
-                +
-              </button>
+            ))}
+          </div>
+          {selectedSize && (
+            <div className="mt-2 text-md text-blue-600">
+              Selected Size: <strong>{selectedSize}</strong>
             </div>
+          )}
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          <div className="mt-4 flex items-center mb-3">
+            <span className="pr-2 text-md">Qty :</span>
+            <Select
+              onValueChange={handleQuantityChange}
+              defaultValue={String(quantity)}
             >
-              Add to bag
-            </button>
-          </form>
-          {/* Reviews */}
-          <div className="p-2">{product.reviews?.length} reviews</div>
+              <SelectTrigger className="w-24 border-gray-300">
+                <SelectValue placeholder="Select quantity" />
+              </SelectTrigger>
+              <SelectContent>
+                {[...Array(Math.min(product.stock, 10))].map((_, i) => (
+                  <SelectItem key={i} value={String(i + 1)}>
+                    {i + 1}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <span
+            className={` ${
+              product.availabilityStatus === "In Stock"
+                ? "text-green-500"
+                : "text-red-500"
+            }`}
+          >
+            {product.availabilityStatus}
+          </span>
+
+          {product.rating && (
+            <div className="text-blue-600 mt-1">
+              <h2> Rating : ★ {product.rating}</h2>
+            </div>
+          )}
+
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            className="mt-6 flex w-80 items-center justify-center rounded-md border border-transparent bg-blue-600 px-8 py-3 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            Add to Cart
+          </button>
+        </form>
+
+        <Accordion type="single" collapsible className="mt-12 border-1">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Details</AccordionTrigger>
+            <AccordionContent>
+              <div>
+                {product.brand && <h2>Brand : {product.brand}</h2>}
+                {product.category && <h2>Type : {product.category}</h2>}
+                {product.dimensions.height && (
+                  <h2>Height: {product.dimensions.height} cm</h2>
+                )}
+                {product.dimensions.depth && (
+                  <h2>Depth: {product.dimensions.depth} cm</h2>
+                )}
+                {product.dimensions.width && (
+                  <h2>Width: {product.dimensions.width} cm</h2>
+                )}
+                {product.warrantyInformation && (
+                  <h2>Warranty: {product.warrantyInformation}</h2>
+                )}
+                {product.returnPolicy && (
+                  <h2>Return Policy: {product.returnPolicy}</h2>
+                )}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <div className="mt-8 pt-4">
+          <ProductReviewAccordion allReviews={product.reviews} />
         </div>
       </div>
     </div>

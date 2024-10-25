@@ -14,7 +14,7 @@ export function ImageCarousel({ images }) {
   };
 
   return (
-    <div >
+    <div>
       <Carousel className="w-full max-w-lg bg-none shadow-none">
         <CarouselContent>
           {images && images.length > 0 ? (
@@ -46,7 +46,7 @@ export function ImageCarousel({ images }) {
       </Carousel>
 
       {images && images.length > 0 && (
-        <div className="flex mt-4 space-x-2 pl-24">
+        <div className="flex mt-4 space-x-2 justify-center">
           {images.map((image, index) => (
             <img
               key={index}

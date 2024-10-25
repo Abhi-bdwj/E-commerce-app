@@ -2,9 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async (limit=194) => {
+  async (limit = 194) => {
     //limit can be set to 194 for all items
-    const response = await fetch(`https://dummyjson.com/products/?limit=${limit}`);
+    const response = await fetch(
+      `https://dummyjson.com/products/?limit=${limit}`
+    );
     if (!response.ok) throw new Error("Failed to fetch selected category");
     const productsData = await response.json();
     return productsData.products;
@@ -17,7 +19,7 @@ export const fetchProductsByCategory = createAsyncThunk(
     if (!response.ok) throw new Error("Failed to fetch selected category");
 
     const selectedCategory = await response.json();
-    console.log("selectedcategoryproducts",selectedCategory.products);
+    console.log("selectedcategoryproducts", selectedCategory.products);
     return selectedCategory.products;
   }
 );
@@ -30,10 +32,27 @@ const productSlice = createSlice({
     selectedCategoryURL: null,
     status: { productsDataStatus: "idle", selectedCategoryStatus: "idle" },
     error: null,
+    productDetails: {
+      productid: null,
+      productName:null,
+      quantity: 1,
+      size: null,
+    },
   },
   reducers: {
     updateSelectedCategoryURL(state, action) {
       state.selectedCategoryURL = action.payload;
+    },
+    addProductDetails(state, action) {
+      state.productDetails = [...state.productDetails, ...action.payload];
+    },
+    resetProductDetails(state) {
+      state.productDetails = {
+        productid: null,
+        productName: null,
+        quantity: null,
+        size: null,
+      };
     },
   },
   extraReducers: (builder) => {
@@ -44,7 +63,6 @@ const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status.productsDataStatus = "fulfilled";
         state.items = action.payload;
-        
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status.productsDataStatus = "failed";
@@ -65,5 +83,10 @@ const productSlice = createSlice({
       });
   },
 });
-export const { addproduct, updateSelectedCategoryURL } = productSlice.actions;
+export const {
+  addproduct,
+  updateSelectedCategoryURL,
+  addProductDetails,
+  resetProductDetails,
+} = productSlice.actions;
 export default productSlice.reducer;
