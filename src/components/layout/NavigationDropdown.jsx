@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,13 +11,17 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import CategoriesList from "../categories/CategoriesList";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import useGetAllCategories from "@/hooks/useGetAllCategories";
+import useGetProductsByCategory from "@/hooks/useGetProductsByCategory";
 
 const NavigationDropdown = () => {
+  useGetAllCategories();
+
   return (
     <div>
       <NavigationMenu>
-        <NavigationMenuList >
+        <NavigationMenuList>
           <NavigationMenuItem>
             <NavLink to="/" className={navigationMenuTriggerStyle()}>
               Home
@@ -25,10 +29,10 @@ const NavigationDropdown = () => {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
-            <NavigationMenuContent >
-              <NavigationMenuLink>
+            <NavigationMenuContent>
+              <div>
                 <CategoriesList /> {/*Categories list */}
-              </NavigationMenuLink>
+              </div>
             </NavigationMenuContent>
           </NavigationMenuItem>
 

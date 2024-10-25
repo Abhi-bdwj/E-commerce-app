@@ -5,8 +5,8 @@ import ProductCard from "./ProductCard";
 
 const ProductsByCategory = () => {
   const { categoryName } = useParams();
-  const { selectedCategoryProducts, status, error } =
-    useGetProductsByCategory(categoryName);
+  const { selectedCategoryProducts, status, error } = useGetProductsByCategory(categoryName);
+  console.log(selectedCategoryProducts);
 
   if (status === "loading") return <div>Loading products...</div>;
   if (status === "failed") return <div>Error: {error}</div>;
@@ -15,7 +15,7 @@ const ProductsByCategory = () => {
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">  
-          Products in "{categoryName}"
+          Products in "{categoryName}" ({selectedCategoryProducts.length})
         </h2>
 
         {selectedCategoryProducts.length === 0 ? (
@@ -31,6 +31,7 @@ const ProductsByCategory = () => {
                 rating={product.rating}
                 brand={product.brand}
                 availabilityStatus={product.availabilityStatus}
+                product={product}
               />
             ))}
           </div>

@@ -9,7 +9,8 @@ const CategoriesList = () => {
   const dispatch = useDispatch();
 
   const handleSelectedCategory = (categoryUrl) => {
-    dispatch(updateSelectedCategoryURL(categoryUrl));
+   const formattedCategoryUrl = categoryUrl.split(" ").join("-")
+    dispatch(updateSelectedCategoryURL(formattedCategoryUrl));
   };
 
   if (status === "loading") return <div>Loading categories...</div>;

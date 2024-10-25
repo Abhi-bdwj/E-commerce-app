@@ -11,7 +11,6 @@ import Footer from "./components/layout/Footer";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Home from "./pages/Home";
-import Categories from "./components/categories/CategoriesList";
 import ProductsByCategory from "./components/products/ProductsByCategory";
 
 export const appRouter = createBrowserRouter([
@@ -49,7 +48,7 @@ export const appRouter = createBrowserRouter([
         element: <SignUp />,
       },
       {
-        path: "/productdetail",
+        path: "/productdetailpage/:id",
         element: <ProductDetailPage />,
       },
       {

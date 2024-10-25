@@ -12,7 +12,9 @@ const useGetProductsByCategory = (category) => {
 
   useEffect(() => {
     if (category) {
-      const categoryURL = `https://dummyjson.com/products/category/${category}?limit=20`;
+      const formattedCategory = category.split(" ").join("-")
+
+      const categoryURL = `https://dummyjson.com/products/category/${formattedCategory}?limit=50`;
       dispatch(updateSelectedCategoryURL(categoryURL));
 
       dispatch(fetchProductsByCategory(categoryURL));
@@ -20,7 +22,7 @@ const useGetProductsByCategory = (category) => {
   }, [dispatch, category]);
 
   return {
-    selectedCategoryProducts: selectedCategoryProducts || [],
+    selectedCategoryProducts,
     status,
     error,
     

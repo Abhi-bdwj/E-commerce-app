@@ -7,7 +7,6 @@ export const fetchAllCategories = createAsyncThunk(
     if (!response.ok) throw new Error("Failed to fetch All categories");
 
     const allCategories = await response.json();
-    console.log(allCategories);
     return allCategories;
   }
 );

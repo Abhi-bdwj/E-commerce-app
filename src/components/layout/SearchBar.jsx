@@ -1,9 +1,9 @@
-import React from "react";
+import React,{useState} from "react";
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
 
 const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = useState("");
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
