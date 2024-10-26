@@ -9,15 +9,22 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart(state, action) {
+      const { product, selectedSize, quantity } = action.payload;
       const existingItem = state.cartItems.find(
-        (item) => item.id === action.payload.id
+        (item) => item.id === product.id && item.selectedSize === selectedSize
       );
+
       if (existingItem) {
-        existingItem.quantity += 1;
+        existingItem.quantity = quantity;
       } else {
-        state.cartItems.push({ ...action.payload, quantity: 1 });
+        state.cartItems.push({ ...product, selectedSize, quantity });
       }
-      state.isEmpty = state.cartItems.length === 0;
+
+      if (state.cartItems.length === 0) {
+        state.isEmpty = true;
+      } else {
+        state.isEmpty = false;
+      }
     },
     clearCart(state) {
       state.cartItems = [];
@@ -27,8 +34,14 @@ const cartSlice = createSlice({
       state.cartItems = state.cartItems.filter(
         (item) => item.id !== action.payload.id
       );
-      state.isEmpty = state.cartItems.length === 0;
+      
+      if (state.cartItems.length === 0) {
+        state.isEmpty = true;
+      } else {
+        state.isEmpty = false;
+      }
     },
+
     setError(state, action) {
       state.error = action.payload;
     },

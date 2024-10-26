@@ -102,7 +102,7 @@ const ProductReviewAccordion = ({ allReviews }) => {
           <p className="text-green-500 mt-2">{successMessage}</p>
         )}
       </form>
-      <Accordion type="single" collapsible>
+      <Accordion type="single" collapsible defaultValue="item-1">
         <AccordionItem value="item-1" open={isOpen}>
           <AccordionTrigger className="mt-1" onClick={toggleAccordion}>
             {` Customer Reviews (${reviews.length})`}

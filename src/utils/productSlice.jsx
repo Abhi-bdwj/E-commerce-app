@@ -32,27 +32,10 @@ const productSlice = createSlice({
     selectedCategoryURL: null,
     status: { productsDataStatus: "idle", selectedCategoryStatus: "idle" },
     error: null,
-    productDetails: {
-      productid: null,
-      productName:null,
-      quantity: 1,
-      size: null,
-    },
   },
   reducers: {
     updateSelectedCategoryURL(state, action) {
       state.selectedCategoryURL = action.payload;
-    },
-    addProductDetails(state, action) {
-      state.productDetails = [...state.productDetails, ...action.payload];
-    },
-    resetProductDetails(state) {
-      state.productDetails = {
-        productid: null,
-        productName: null,
-        quantity: null,
-        size: null,
-      };
     },
   },
   extraReducers: (builder) => {

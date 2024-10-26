@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { ImageCarousel } from "../layout/ImageCarousel";
 import {
@@ -36,6 +36,7 @@ const ProductDetailPage = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
+  const errorRef = useRef(null);
 
   const handleQuantityChange = (value) => {
     setQuantity(Number(value));
@@ -43,14 +44,24 @@ const ProductDetailPage = () => {
 
   const handleSizeSelect = (size) => {
     setSelectedSize(size);
+    if (errorRef.current) {
+      errorRef.current.textContent = "";
+    }
   };
 
   const handleAddToCart = () => {
-    if (selectedSize) {
+    const requiresSize =
+      product.tags.includes("footwear") || product.tags.includes("clothing");
+
+    if (requiresSize && !selectedSize) {
+      if (errorRef.current) {
+        errorRef.current.textContent = "*Please Select a size*";
+      }
+    } else {
       dispatch(
         addToCart({
           product,
-          selectedSize,
+          selectedSize: requiresSize ? selectedSize : undefined,
           quantity,
         })
       );
@@ -81,23 +92,29 @@ const ProductDetailPage = () => {
         </div>
 
         <form className="pt-3 rounded-md">
-          <div className="flex space-x-2 mt-2">
-            {sizes.map((size) => (
-              <button
-                key={size}
-                type="button"
-                onClick={() => handleSizeSelect(size)}
-                className={`border rounded-md py-2 px-4 transition duration-200 ${
-                  selectedSize === size
-                    ? "border-blue-500 bg-blue-100"
-                    : "border-gray-300"
-                } hover:bg-blue-50`}
-                aria-label={`Select size ${size}`}
-              >
-                {size}
-              </button>
-            ))}
-          </div>
+          {product.tags.includes("footwear") ||
+          product.tags.includes("clothing") ? (
+            <div className="flex space-x-2 mt-2">
+              {sizes.map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => handleSizeSelect(size)}
+                  className={`border rounded-md py-2 px-4 transition duration-200 ${
+                    selectedSize === size
+                      ? "border-blue-500 bg-blue-100"
+                      : "border-gray-300"
+                  } hover:bg-blue-50`}
+                  aria-label={`Select size ${size}`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          ) : null}
+
+          <p ref={errorRef} className="text-red-500" />
+
           {selectedSize && (
             <div className="mt-2 text-md text-blue-600">
               Selected Size: <strong>{selectedSize}</strong>
@@ -124,7 +141,7 @@ const ProductDetailPage = () => {
           </div>
 
           <span
-            className={` ${
+            className={`${
               product.availabilityStatus === "In Stock"
                 ? "text-green-500"
                 : "text-red-500"
@@ -147,8 +164,12 @@ const ProductDetailPage = () => {
             Add to Cart
           </button>
         </form>
-
-        <Accordion type="single" collapsible className="mt-12 border-1">
+        <Accordion
+          type="single"
+          collapsible
+          defaultValue="item-1"
+          className="mt-12 border-1"
+        >
           <AccordionItem value="item-1">
             <AccordionTrigger>Details</AccordionTrigger>
             <AccordionContent>

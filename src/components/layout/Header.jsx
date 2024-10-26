@@ -16,7 +16,8 @@ const Header = () => {
   const location = useLocation();
   const [loggedIn, setLoggedIn] = useState(true);
   const { isAuthenticated } = useSelector((store) => store.user);
-  const cartItems = ["sher", "sher2"];
+  const {cartItems} =useSelector((state)=>state.cart)
+   
 
   const LoginSignupHandler = () => {
     navigate("/login");
@@ -50,7 +51,7 @@ const Header = () => {
   }, [dispatch, navigate, location.pathname]);
 
   return (
-    <header>
+    <header className="fixed top-0 left-0 w-full z-50">
       <div className="h-16 bg-white shadow-lg flex justify-between items-center px-10">
         <div className="flex items-center space-x-8">
           <h1 className="font-bold text-2xl pl-14">𝒁𝑼𝑬 ˢᵗᵒʳᵉ</h1>
