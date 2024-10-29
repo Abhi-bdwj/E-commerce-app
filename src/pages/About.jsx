@@ -3,7 +3,7 @@ import React from "react";
 const About = () => {
   return (
     <div className="bg-white py-10">
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="max-w-4xl mx-auto px-4 pt-20">
         <h1 className="text-3xl font-bold text-center mb-6">About Us</h1>
         <p className="text-gray-700 text-lg mb-4">
           Welcome to ZUE Store, where style meets comfort! We are dedicated to

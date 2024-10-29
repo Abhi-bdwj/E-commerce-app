@@ -1,22 +1,17 @@
 import React from "react";
-import CartItem from "@/components/cart/CartItem";
+import CartPage from "@/components/cart/CartPage";
 import { useSelector } from "react-redux";
+import RelatedProducts from "../components/products/RelatedProducts";
 
 const Cart = () => {
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems } = useSelector((state) => state.cart) || [];
   console.log(cartItems);
-
   return (
     <div>
-      <CartItem items={cartItems} />
+      <CartPage items={cartItems} />
+      {cartItems.length > 0 ? <RelatedProducts /> : null}
     </div>
   );
 };
 
 export default Cart;
-
-
-
-
-
-

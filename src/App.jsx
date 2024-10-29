@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Home from "./pages/Home";
 import ProductsByCategory from "./components/products/ProductsByCategory";
+import CheckoutPage from "./components/cart/CheckOutPage";
 
 export const appRouter = createBrowserRouter([
   {
@@ -24,8 +25,12 @@ export const appRouter = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/cart",
+        path: "/cart/",
         element: <Cart />,
+      },
+      {
+        path: "/cart/checkout",
+        element: <CheckoutPage />,
       },
       {
         path: "/category/:categoryName",
@@ -67,7 +72,7 @@ function App() {
         <main className="flex-grow">
           <Outlet />
         </main>
-        <Footer />
+        {{ path: "/cart" } ? null : <Footer />}
       </Provider>
     </div>
   );
