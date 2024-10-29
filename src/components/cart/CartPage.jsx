@@ -18,7 +18,9 @@ const CartPage = ({ items }) => {
   };
 
   const handleQuantity = (type, id) => {
-    dispatch(type === "decrement" ? decrementQuantity(id) : incrementQuantity(id));
+    dispatch(
+      type === "decrement" ? decrementQuantity(id) : incrementQuantity(id)
+    );
   };
 
   const handleCheckOut = () => {
@@ -44,7 +46,9 @@ const CartPage = ({ items }) => {
 
   return (
     <div className="p-8 mt-16 z-30">
-      {cartItems.length > 0 && <h2 className="text-3xl font-bold mb-8">Shopping Cart</h2>}
+      {cartItems.length > 0 && (
+        <h2 className="text-3xl font-bold mb-8">Shopping Cart</h2>
+      )}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="w-full lg:w-full">
           {cartItems.length === 0 ? (
@@ -81,32 +85,37 @@ const CartPage = ({ items }) => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2 ml-32">
-                  <h1 className="text-sm">Qty:</h1>
-                  <button
-                    onClick={() => handleQuantity("decrement", item.id)}
-                    className="p-1 w-8 h-8 flex items-center justify-center border rounded-md bg-gray-100 hover:bg-gray-200"
-                    aria-label="Decrease quantity"
-                  >
-                    <MinusIcon className="w-4 h-4 text-gray-600" />
-                  </button>
-                  <p className="text-lg font-medium">{item.quantity}</p>
-                  <button
-                    onClick={() => handleQuantity("increment", item.id)}
-                    className="p-1 w-8 h-8 flex items-center justify-center border rounded-md bg-gray-100 hover:bg-gray-200"
-                    aria-label="Increase quantity"
-                  >
-                    <PlusIcon className="w-4 h-4 text-gray-600" />
-                  </button>
-                </div>
+                <div className="flex">
+                  <div className="flex items-center space-x-2  mr-20">
+                    <h1 className="text-sm">Qty:</h1>
+                    <button
+                      onClick={() => handleQuantity("decrement", item.id)}
+                      className="p-1 w-8 h-8 flex items-center justify-center border rounded-md bg-gray-100 hover:bg-gray-200"
+                      aria-label="Decrease quantity"
+                    >
+                      <MinusIcon className="w-4 h-4 text-gray-600" />
+                    </button>
 
-                <button
-                  onClick={() => handleRemoveCartItem(item)}
-                  className="text-gray-400 hover:text-red-500"
-                  aria-label="Remove item"
-                >
-                  <XCircle className="w-6 h-6 text-red-950 hover:text-red-700" />
-                </button>
+                    <p className="text-lg font-medium">{item.quantity}</p>
+                    <button
+                      onClick={() => handleQuantity("increment", item.id)}
+                      className="p-1 w-8 h-8 flex items-center justify-center border rounded-md bg-gray-100 hover:bg-gray-200 "
+                      aria-label="Increase quantity"
+                    >
+                      <PlusIcon className="w-4 h-4 text-gray-600" />
+                    </button>
+                  </div>
+
+                  <div>
+                    <button
+                      onClick={() => handleRemoveCartItem(item)}
+                      className="w-6 h-6 text-red-950 hover:text-red-700 pt-1"
+                      aria-label="Remove item"
+                    >
+                      <XCircle />
+                    </button>
+                  </div>
+                </div>
               </div>
             ))
           )}
