@@ -7,11 +7,12 @@ import {
   decrementQuantity,
   incrementQuantity,
 } from "@/utils/cartSlice";
-import { useNavigate } from "react-router-dom";
+
+const shippingEstimate = 5.0;
+const taxEstimate = 8.32;
 
 const CartPage = ({ items }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleRemoveCartItem = (item) => {
     dispatch(removeFromCart(item));
@@ -23,20 +24,80 @@ const CartPage = ({ items }) => {
     );
   };
 
-  const handleCheckOut = () => {
-    navigate("/cart/checkout", {
-      state: {},
-    });
+  const handleCheckout = async () => {
+    const response = await fetch(
+      "http://localhost:4242/create-checkout-session",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ items: cartItems, totalAmount:total }), // Send total amount
+      }
+    );
+
+    if (!response.ok) {
+      console.error("Failed to create checkout session");
+      return; // Handle error appropriately
+    }
+
+    const { sessionId } = await response.json();
+    const stripe = Stripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY); // Access Stripe key from env
+
+    // Redirect to Stripe Checkout
+    const { error } = await stripe.redirectToCheckout({ sessionId });
+
+    if (error) {
+      console.error("Error during checkout:", error);
+      // Consider displaying an error message to the user
+    } else {
+      saveOrder(sessionId, totalAmount); // Include totalAmount here
+    }
   };
+
+  async function saveOrder(sessionId, totalAmount) {
+    const response = await fetch("/save-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ sessionId, totalAmount }), // Send total amount to be saved
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      console.log("Order saved:", data.orderData);
+    } else {
+      console.error("Failed to save order:", data.error);
+    }
+  }
+
+  async function saveOrder(sessionId) {
+    const response = await fetch("/save-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ sessionId }),
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      console.log("Order saved:", data.orderData);
+    } else {
+      console.error("Failed to save order:", data.error);
+    }
+  }
 
   const cartItems = items;
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-  const shippingEstimate = 5.0;
-  const taxEstimate = 8.32;
-  const total = subtotal + shippingEstimate + taxEstimate;
+  const calculateTotal = () => {
+    return subtotal + shippingEstimate + taxEstimate;
+  };
+  const total = calculateTotal();
 
   const totalDiscount = cartItems.reduce((totalDiscount, item) => {
     const discountAmount =
@@ -154,7 +215,7 @@ const CartPage = ({ items }) => {
             </div>
             <Button
               variant="primary"
-              onClick={handleCheckOut}
+              onClick={handleCheckout}
               className="w-full mt-6 bg-blue-600 text-white hover:bg-blue-700 text-lg"
               aria-label="Proceed to checkout"
             >

@@ -12,7 +12,12 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Home from "./pages/Home";
 import ProductsByCategory from "./components/products/ProductsByCategory";
-import CheckoutPage from "./components/cart/CheckOutPage";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import Cancel from "./components/layout/Cancel";
+import Success from "./components/layout/Success";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export const appRouter = createBrowserRouter([
   {
@@ -29,9 +34,14 @@ export const appRouter = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path: "/cart/checkout",
-        element: <CheckoutPage />,
+        path: "success",
+        element: <Success />,
       },
+      {
+        path: "cancel",
+        element: <Cancel />,
+      },
+
       {
         path: "/category/:categoryName",
         element: <ProductsByCategory />,
@@ -68,11 +78,13 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <Provider store={appStore}>
-        <Header />
-        <main className="flex-grow">
-          <Outlet />
-        </main>
-        {{ path: "/cart" } ? null : <Footer />}
+        <Elements stripe={stripePromise}>
+          <Header />
+          <main className="flex-grow">
+            <Outlet />
+          </main>
+          {window.location.pathname !== "/cart" && <Footer />}
+        </Elements>
       </Provider>
     </div>
   );
